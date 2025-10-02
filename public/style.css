@@ -1,1 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+:root {
+    --primary-color: #5e72e4;
+    --success-color: #2dce89;
+    --danger-color: #f5365c;
+    --background-color: #f4f5f7;
+    --card-background: #ffffff;
+    --text-color: #525f7f;
+    --light-text-color: #8898aa;
+    --border-color: #e9ecef;
+}
+
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: var(--card-background);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    width: 100%;
+    max-width: 550px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+header p {
+    color: var(--light-text-color);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+}
+
+#download-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+#url-input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+#url-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(94, 114, 228, 0.2);
+}
+
+#download-btn {
+    background-image: linear-gradient(to right, #667eea 0%, #764ba2 51%, #667eea 100%);
+    background-size: 200% auto;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+#download-btn:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+}
+
+#download-btn:disabled {
+    background-image: none;
+    background-color: #a0bdf1;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#results {
+    margin-top: 2.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#results.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.result-item {
+    background-color: #f6f9fc;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    text-align: left;
+}
+
+.result-item p {
+    margin: 0 0 1.2rem 0;
+    font-weight: 600;
+    word-wrap: break-word;
+    line-height: 1.5;
+}
+
+.result-item a {
+    display: block;
+    background-color: var(--success-color);
+    color: white;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.result-item a:hover {
+    background-color: #27b97a;
+    transform: translateY(-2px);
+}
+
+.hidden { display: none; }
+
+#loader {
+    border: 5px solid #e9ecef;
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 2.5rem auto 0;
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+#error-message {
+    background-color: #fddddd;
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    font-weight: 600;
+}
+
+.supported-platforms {
+    margin-top: 3rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+}
+
+.supported-platforms h3 {
+    color: var(--light-text-color);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.logos img {
+    height: 32px;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.logos img:hover {
+    opacity: 1;
+}
