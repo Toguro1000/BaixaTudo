@@ -34,13 +34,13 @@ form.addEventListener('submit', async (event) => {
     }
 });
 
-// Função ATUALIZADA para a nova animação
+// Substitua a sua função displayResult antiga por esta
 function displayResult(data) {
     const resultHTML = `
         <div class="result-item">
             <p>Título: ${data.title}</p>
             <a href="${data.url}" target="_blank" download>
-                Baixar Vídeo (${data.format})
+                Seu vídeo está pronto! Clique para baixar
             </a>
         </div>
     `;
