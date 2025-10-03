@@ -136,75 +136,63 @@ header h1 {
     align-items: center; /* Alinha verticalmente */
     letter-spacing: -1px; /* Ajusta o espaçamento geral das letras no h1 */
 }
+/* ---- Estilos para a seção de Benefícios ---- */
 
-/* Código novo a ser adicionado no final do style.css */
-
-/* Mensagem de Status Intermediário */
-#status-message {
-    font-weight: 600;
-    color: var(--light-text-color);
-    margin-top: 2rem;
+/* Este é o "card" principal que agrupa os benefícios */
+.beneficios-container {
+    background-color: #ffffff; /* Fundo branco */
+    padding: 25px 30px;
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 500px; /* Largura máxima do card */
+    width: 90%; /* Ocupa 90% da largura da tela, bom para celulares */
+    margin: 20px auto; /* Centraliza o card na página */
+    border-top: 5px solid #007bff; /* Detalhe de cor no topo */
 }
 
-/* Media Query para ecrãs menores - Melhor responsividade */
-@media (max-width: 480px) {
-    .container {
-        padding: 1.5rem;
-    }
-    header h1 {
-        font-size: 2rem;
-    }
-    header h1 span {
-        font-size: 2.8rem;
-    }
-}
-/* Estilos para a nova secção de Benefícios (CORRIGIDO PARA O LAYOUT DESEJADO) */
-.benefits-section {
-    margin-top: 3rem;
-    border-top: 1px solid var(--border-color);
-    padding-top: 2rem;
-    text-align: left;
-}
-
-.benefits-section h2 {
+/* Estilo para o título "Nossos Benefícios" */
+.beneficios-container h3 {
     text-align: center;
-    color: var(--text-color);
-    margin-bottom: 1.5rem;
+    font-size: 24px;
+    color: #007bff; /* Cor azul para o título */
+    margin-top: 0;
+    margin-bottom: 20px;
 }
 
-.benefits-section ul {
-    list-style-type: none; /* Remove as bolinhas da lista padrão */
+/* Estilo para a lista (<ul>) */
+.beneficios-container ul {
+    list-style: none; /* Remove as bolinhas da lista */
     padding: 0;
-    display: flex; /* Usa flexbox para distribuir os itens */
-    flex-direction: column; /* Coloca os itens um abaixo do outro por padrão */
-    gap: 1.5rem; /* Espaço entre cada item da lista */
+    margin: 0;
 }
 
-.benefits-section li {
-    display: grid; /* Usa CSS Grid para o layout interno de cada item */
-    grid-template-columns: auto 1fr; /* Duas colunas: uma para o ícone/título, outra para a descrição */
-    gap: 0.5rem; /* Espaço entre as colunas */
-    align-items: flex-start; /* Alinha o conteúdo ao topo do item */
-    line-height: 1.6;
-    color: var(--text-color);
+/* Estilo para cada item da lista (<li>) */
+.beneficios-container li {
+    font-size: 16px;
+    line-height: 1.6; /* Melhora a leitura */
+    margin-bottom: 15px; /* Espaço entre os itens */
 }
 
-.benefits-section li strong {
-    color: #32325d; /* Cor mais escura para o texto em negrito */
-    font-size: 1.05rem; /* Um pouco maior que o texto normal */
-    display: flex; /* Para alinhar o ícone e o texto "forte" */
-    align-items: center; /* Alinha verticalmente ícone e texto */
-    gap: 0.5rem; /* Espaço entre o ícone e o texto "forte" */
-    white-space: nowrap; /* Impede que o texto "forte" quebre a linha */
+.beneficios-container li:last-child {
+    margin-bottom: 0; /* Remove a margem do último item */
 }
 
-/* Responsividade para telas menores: o layout grid pode quebrar,
-   então voltamos para o padrão flexbox, mas mantendo a estrutura. */
-@media (max-width: 480px) {
-    .benefits-section li {
-        grid-template-columns: 1fr; /* Uma única coluna em telas muito pequenas */
-    }
-    .benefits-section li strong {
-        justify-content: flex-start; /* Alinha o título e ícone à esquerda */
-    }
+
+/* ---- Estilos para o Rodapé (Footer) ---- */
+footer {
+    text-align: center;
+    color: #666; /* Cor cinza para o texto do rodapé */
+    font-size: 14px;
+    margin-top: 30px;
+    padding: 10px;
 }
+
+footer p {
+    margin: 5px 0; /* Espaçamento pequeno entre as linhas */
+}
+
+/* Deixa a frase "Feito para facilitar..." em itálico */
+.tagline {
+    font-style: italic;
+}
+
