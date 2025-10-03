@@ -150,32 +150,41 @@ header h1 {
     border-top: 5px solid #007bff; /* Detalhe de cor no topo */
 }
 
-/* Estilo para o título "Nossos Benefícios" */
-.beneficios-container h3 {
-    text-align: center;
-    font-size: 24px;
-    color: #007bff; /* Cor azul para o título */
-    margin-top: 0;
-    margin-bottom: 20px;
-}
+/* ---- Estilos CORRIGIDOS para a Lista de Benefícios ---- */
 
-/* Estilo para a lista (<ul>) */
+/* A lista em si */
 .beneficios-container ul {
-    list-style: none; /* Remove as bolinhas da lista */
+    list-style: none; /* Remove as bolinhas pretas */
     padding: 0;
     margin: 0;
+    display: flex; /* Organiza os itens em uma coluna flexível */
+    flex-direction: column;
+    gap: 18px; /* Espaço VERTICAL entre cada benefício */
 }
 
-/* Estilo para cada item da lista (<li>) */
+/* CADA item da lista (aqui está a mágica) */
 .beneficios-container li {
-    font-size: 16px;
-    line-height: 1.6; /* Melhora a leitura */
-    margin-bottom: 15px; /* Espaço entre os itens */
+    display: grid; /* Ativa o layout de grade para criar as colunas */
+    grid-template-columns: auto 1fr; /* Coluna 1 (auto) se ajusta ao texto do título. Coluna 2 (1fr) ocupa o resto do espaço. */
+    gap: 5px 10px;   /* 5px de espaço vertical, 10px de espaço HORIZONTAL (entre o título e a descrição) */
+    align-items: center; /* Alinha o conteúdo verticalmente */
+    line-height: 1.5;
 }
 
-.beneficios-container li:last-child {
-    margin-bottom: 0; /* Remove a margem do último item */
+/* O título em negrito (Primeira coluna) */
+.beneficios-container li strong {
+    font-size: 16px;
+    white-space: nowrap; /* Impede que o título quebre em duas linhas */
+    color: #333; /* Cor um pouco mais escura para o título */
 }
+
+/* A descrição (Segunda coluna) */
+.beneficios-container li span {
+    font-size: 15px;
+    color: #555; /* Cor um pouco mais suave para a descrição */
+}
+
+
 
 
 /* ---- Estilos para o Rodapé (Footer) ---- */
