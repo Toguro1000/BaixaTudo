@@ -11,10 +11,9 @@
 }
 
 /* SUGESTÃO: Fundo animado */
-@keyframes gradient-animation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+@keyframes fill-loader {
+    0% { width: 0%; }
+    100% { width: 100%; }
 }
 
 body {
@@ -77,7 +76,29 @@ header p {
 .result-item a { display: block; background-color: var(--success-color); color: white; text-decoration: none; padding: 14px; border-radius: 6px; font-weight: bold; text-align: center; transition: background-color 0.2s, transform 0.2s; box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }
 .result-item a:hover { background-color: #27b97a; transform: translateY(-2px); }
 .hidden { display: none; }
-#loader { border: 5px solid #e9ecef; border-top: 5px solid var(--primary-color); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 2.5rem auto 0; }
+/* Novo indicador de carregamento: barra de energia */
+#loader {
+    width: 150px; /* Largura da barra */
+    height: 20px; /* Altura da barra */
+    background-color: #e9ecef; /* Cor de fundo da barra vazia */
+    border-radius: 10px; /* Bordas arredondadas */
+    margin: 2.5rem auto 0;
+    overflow: hidden; /* Garante que o preenchimento não saia da barra */
+    position: relative;
+    border: 1px solid var(--primary-color); /* Borda para destacar */
+}
+
+#loader::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(to right, #2dce89 0%, #11cdef 100%); /* Gradiente de energia */
+    border-radius: 10px;
+    animation: fill-loader 2s infinite alternate; /* Aplica a animação */
+}
 #error-message { background-color: #fddddd; color: var(--danger-color); border: 1px solid var(--danger-color); padding: 1rem; border-radius: 8px; margin-top: 2rem; font-weight: 600; }
 .supported-platforms { margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 2rem; }
 .supported-platforms h3 { color: var(--light-text-color); font-weight: 600; margin-bottom: 1.5rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
