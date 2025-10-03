@@ -106,23 +106,33 @@ header p {
 .logos img { height: 32px; opacity: 0.6; transition: opacity 0.2s ease; }
 .logos img:hover { opacity: 1; }
 /* Novo estilo para o 'X' destacado no título */
+/* NOVO ESTILO: Ajuste do X para ficar mais junto */
 header h1 span {
-    font-size: 3.2rem; /* Aumenta o tamanho do 'X' */
-    background: linear-gradient(to right, #f5365c 0%, #fb6340 100%); /* Novo gradiente */
+    font-size: 3.2rem; /* Mantém o tamanho do 'X' */
+    background: linear-gradient(to right, #f5365c 0%, #fb6340 100%); /* Mantém o gradiente */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
-    display: inline-block; /* Permite controlar melhor o espaçamento */
-    margin: 0 5px; /* Espaço entre 'Baixador' e 'pro' */
-    line-height: 1; /* Ajusta a altura da linha para o 'X' */
-    vertical-align: middle; /* Alinha o 'X' no meio com o resto do texto */
+    display: inline-block;
+    margin: 0 2px; /* Reduz a margem horizontal para ficar mais próximo */
+    line-height: 1;
+    vertical-align: middle;
+    letter-spacing: -2px; /* Reduz ainda mais o espaçamento entre o X e as letras adjacentes */
 }
 
-/* Ajuste no h1 principal para compensar o 'X' maior */
+/* NOVO ESTILO: Ajuste no h1 principal para compensar o 'X' maior */
 header h1 {
     font-size: 2.5rem; /* Base para 'Baixador' e 'pro' */
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
     display: flex; /* Permite alinhar os itens flexivelmente */
     justify-content: center; /* Centraliza tudo */
     align-items: center; /* Alinha verticalmente */
+    letter-spacing: -1px; /* Ajusta o espaçamento geral das letras no h1 */
 }
