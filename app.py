@@ -28,51 +28,61 @@ def fetch_info():
 
     logging.info(f"Recebida requisição para a URL: {url}")
     
-    ydl_opts = {
-        'noplaylist': True,
-        'quiet': True,
-        'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best', # Pega os melhores formatos separados para MP4
-    }
+    ydl_opts = {'noplaylist': True, 'quiet': True}
 
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
             
-            formats = []
+            # Lógica V3 para filtrar e limpar os formatos
+            filtered_formats = {}
+            best_audio = None
+
             for f in info.get('formats', []):
-                # Filtra para ter apenas formatos com URL de download e algum detalhe de qualidade
-                if f.get('url') and (f.get('format_note') or f.get('resolution')):
-                    formats.append({
-                        "id": f.get('format_id'),
-                        "quality": f.get('format_note', f'{f.get("height", "...")}p'),
-                        "ext": f.get('ext'),
-                        "size_mb": round(f.get('filesize', 0) / (1024*1024), 2) if f.get('filesize') else "N/A",
-                        "download_url": f.get('url')
-                    })
+                if not f.get('url'):
+                    continue
 
-            # Adiciona o formato de áudio se disponível
-            if info.get('acodec', 'none') != 'none':
-                 formats.append({
-                    "id": "audio_only",
-                    "quality": f"Áudio ({info.get('acodec', '')})",
-                    "ext": info.get('audio_ext', 'm4a'),
-                    "size_mb": "N/A",
-                    "download_url": info.get('url') # URL principal pode servir para áudio
-                })
+                # Encontra o melhor áudio separado
+                if f.get('vcodec') == 'none' and f.get('acodec') != 'none':
+                    if not best_audio or (f.get('abr', 0) > best_audio.get('abr', 0)):
+                        best_audio = f
+                
+                # Encontra vídeos com vídeo e áudio juntos
+                if f.get('vcodec') != 'none' and f.get('acodec') != 'none':
+                    height = f.get('height')
+                    if height:
+                        label = f"Vídeo ({height}p)"
+                        # Adiciona apenas se for uma qualidade nova ou melhor para essa resolução
+                        if label not in filtered_formats or f.get('filesize', 0) > filtered_formats[label].get('filesize', 0):
+                             filtered_formats[label] = {
+                                "quality": label,
+                                "ext": f.get('ext'),
+                                "size_mb": round(f.get('filesize', 0) / (1024*1024), 2) if f.get('filesize') else "N/A",
+                                "download_url": f.get('url')
+                            }
 
-            if not formats:
-                 # Se nenhum formato foi encontrado, usa o URL principal
-                formats.append({
-                    "id": "best",
+            # Se não encontrámos vídeos com áudio, pegamos o melhor de tudo
+            if not filtered_formats and info.get('url'):
+                 filtered_formats['Melhor Qualidade'] = {
                     "quality": "Melhor Qualidade",
                     "ext": info.get('ext', 'mp4'),
                     "size_mb": "N/A",
                     "download_url": info.get('url')
-                })
+                }
+
+            # Adiciona a opção de apenas áudio, se encontrámos uma
+            if best_audio:
+                label_audio = f"Apenas Áudio ({best_audio.get('ext')})"
+                filtered_formats[label_audio] = {
+                    "quality": label_audio,
+                    "ext": best_audio.get('ext'),
+                    "size_mb": round(best_audio.get('filesize', 0) / (1024*1024), 2) if best_audio.get('filesize') else "N/A",
+                    "download_url": best_audio.get('url')
+                }
 
             response_data = {
                 "title": info.get('title', 'Título não encontrado'),
-                "formats": formats
+                "formats": list(filtered_formats.values()) # Transforma o dicionário de volta em lista
             }
             return jsonify(response_data)
 
@@ -86,17 +96,16 @@ def fetch_info():
 @app.route('/api/v1/proxy-download')
 def proxy_download():
     video_url = request.args.get('url')
+    file_ext = request.args.get('ext', 'mp4')
     if not video_url:
         return "URL para download não fornecida.", 400
 
     try:
-        # Usamos stream=True para não carregar o vídeo inteiro na memória do servidor
         req = requests.get(video_url, stream=True, headers={'Referer': 'https://www.google.com/'})
         
-        # Passamos o conteúdo e os cabeçalhos para o utilizador
         return Response(req.iter_content(chunk_size=1024*1024),
-                        content_type=req.headers['content-type'],
-                        headers={"Content-Disposition": "attachment; filename=video.mp4"})
+                        content_type=req.headers.get('content-type', 'application/octet-stream'),
+                        headers={"Content-Disposition": f"attachment; filename=video.{file_ext}"})
     except Exception as e:
         logging.error(f"Falha no proxy-download para {video_url}: {e}")
         return "Não foi possível baixar o ficheiro.", 500
