@@ -10,7 +10,6 @@ form.addEventListener('submit', async (event) => {
     event.preventDefault();
     const url = urlInput.value.trim();
 
-    // Validação de URL no Front-end
     try {
         new URL(url);
     } catch (_) {
@@ -36,7 +35,6 @@ form.addEventListener('submit', async (event) => {
         }
 
         showLoader(false);
-        showStatus('Gerando links de download...');
         displayResult(data);
 
     } catch (error) {
@@ -47,18 +45,20 @@ form.addEventListener('submit', async (event) => {
     }
 });
 
+// Função V4 - Simplificada para um único botão
 function displayResult(data) {
-    let resultHTML = `<div class="result-item"><p>Título: ${data.title}</p>`;
+    // Cria o link seguro que passa pelo nosso servidor
+    const proxyUrl = `/api/v1/proxy-download?url=${encodeURIComponent(data.download_url)}&ext=${data.ext}`;
     
-    data.formats.forEach(format => {
-        // Agora o link aponta para o nosso endpoint de proxy-download
-        const proxyUrl = `/api/v1/proxy-download?url=${encodeURIComponent(format.download_url)}`;
-        resultHTML += `<a href="${proxyUrl}" target="_blank">Baixar ${format.quality} (${format.ext}) - ${format.size_mb} MB</a>`;
-    });
-
-    resultHTML += `</div>`;
+    const resultHTML = `
+        <div class="result-item">
+            <p>Título: ${data.title}</p>
+            <a href="${proxyUrl}" target="_blank">
+                Seu vídeo está pronto! Clique para baixar
+            </a>
+        </div>
+    `;
     resultsDiv.innerHTML = resultHTML;
-    showStatus(''); // Limpa a mensagem de status
     resultsDiv.classList.add('visible');
 }
 
@@ -67,7 +67,7 @@ function showError(message) {
     errorMessage.classList.remove('hidden');
 }
 
-function showStatus(message) {
+function showStatus(message) { // Esta função não é mais usada, mas podemos deixar
     if (message) {
         statusMessage.textContent = message;
         statusMessage.classList.remove('hidden');
@@ -90,4 +90,3 @@ function showLoader(visible) {
 function setButtonState(enabled) {
     downloadBtn.disabled = !enabled;
 }
-
