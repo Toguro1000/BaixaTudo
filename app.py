@@ -54,7 +54,7 @@ def fetch_info():
         logging.error(f"Erro genérico para {url}: {e}")
         return jsonify({"error": "Ocorreu um erro inesperado no servidor. Tente novamente."}), 500
 
-# O endpoint de proxy-download continua igual e necessário
+# Dentro do seu app.py, substitua apenas esta função:
 @app.route('/api/v1/proxy-download')
 def proxy_download():
     video_url = request.args.get('url')
@@ -65,13 +65,22 @@ def proxy_download():
     try:
         req = requests.get(video_url, stream=True, headers={'Referer': 'https://www.google.com/'})
         
-        return Response(req.iter_content(chunk_size=1024*1024),
-                        content_type=req.headers.get('content-type', 'application/octet-stream'),
-                        headers={"Content-Disposition": f"attachment; filename=video.{file_ext}"})
+        # Pega o tamanho do ficheiro para a barra de progresso
+        total_length = req.headers.get('content-length')
+        
+        headers = {
+            "Content-Disposition": f"attachment; filename=video.{file_ext}",
+            "Content-Type": req.headers.get('content-type', 'application/octet-stream'),
+        }
+        
+        # Adiciona o tamanho do ficheiro ao cabeçalho da resposta
+        if total_length:
+            headers["Content-Length"] = total_length
+
+        return Response(req.iter_content(chunk_size=1024*1024), headers=headers)
     except Exception as e:
         logging.error(f"Falha no proxy-download para {video_url}: {e}")
         return "Não foi possível baixar o ficheiro.", 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
-
