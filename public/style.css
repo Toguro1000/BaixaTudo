@@ -150,29 +150,62 @@ header h1 {
     border-top: 5px solid #007bff; /* Detalhe de cor no topo */
 }
 
-/* ---- Estilos CORRIGIDOS para a Lista de Benefícios ---- */
+/* ESTILOS ATUALIZADOS PARA A SECÇÃO DE BENEFÍCIOS COM DUAS COLUNAS */
+.benefits-section {
+    margin-top: 3rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+    text-align: left;
+}
 
-/* A lista em si */
-.beneficios-container ul {
-    list-style: none; /* Remove as bolinhas pretas */
+.benefits-section h2 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 2rem; /* Aumentei o espaço */
+}
+
+.benefits-section ul {
+    list-style-type: none;
     padding: 0;
-    margin: 0;
-    display: flex; /* Organiza os itens em uma coluna flexível */
+    display: flex;
     flex-direction: column;
-    gap: 18px; /* Espaço VERTICAL entre cada benefício */
+    gap: 1.5rem; /* Espaço entre cada benefício */
 }
 
-/* CADA item da lista (aqui está a mágica) */
-.beneficios-container li {
-    display: grid; /* Ativa o layout de grade para criar as colunas */
-    grid-template-columns: auto 1fr; /* Coluna 1 (auto) se ajusta ao texto do título. Coluna 2 (1fr) ocupa o resto do espaço. */
-    gap: 5px 10px;   /* 5px de espaço vertical, 10px de espaço HORIZONTAL (entre o título e a descrição) */
-    align-items: center; /* Alinha o conteúdo verticalmente */
-    line-height: 1.5;
+.benefits-section li {
+    display: flex;
+    flex-direction: row; /* Coloca os divs lado a lado */
+    align-items: flex-start; /* Alinha pelo topo */
+    gap: 1rem; /* Espaço entre as duas colunas */
 }
 
-/* O título em negrito (Primeira coluna) */
-.beneficios-container li strong {
+.benefit-title {
+    flex-basis: 220px; /* Define uma largura base para a coluna da esquerda */
+    flex-shrink: 0; /* Impede que a coluna da esquerda encolha */
+    font-weight: 600;
+    color: #32325d;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.benefit-description {
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* Ajuste para ecrãs de telemóvel menores */
+@media (max-width: 500px) {
+    .benefits-section li {
+        flex-direction: column; /* Em telemóveis, as colunas ficam uma em cima da outra */
+        gap: 0.25rem; /* Reduz o espaço quando estão empilhadas */
+        align-items: flex-start;
+    }
+    .benefit-title {
+        flex-basis: auto; /* Remove a largura fixa */
+    }
+}
+
     font-size: 16px;
     white-space: nowrap; /* Impede que o título quebre em duas linhas */
     color: #333; /* Cor um pouco mais escura para o título */
